@@ -103,12 +103,25 @@ fun ColumnItems(item: Item){
             .height(70.dp)
             .padding(10.dp)
     ) {
-if(item.gender=="male")
-        Image(painter = painterResource(id = R.drawable.gender_male), contentDescription = "Male",
-          modifier= Modifier
-              .width(30.dp)
-              .height(30.dp)
-              .padding(10.dp))
+if(item.gender=="male") {
+    Image(
+        painter = painterResource(id = R.drawable.gender_male), contentDescription = "Male",
+        modifier = Modifier
+            .width(30.dp)
+            .height(30.dp)
+            .padding(10.dp)
+    )
+}
+        else if(item.gender=="female")
+{
+    Image(
+        painter = painterResource(id = R.drawable.gender_female), contentDescription = "Male",
+        modifier = Modifier
+            .width(30.dp)
+            .height(30.dp)
+            .padding(10.dp)
+    )
+}
 
         Spacer(modifier = Modifier.width(10.dp))
 
