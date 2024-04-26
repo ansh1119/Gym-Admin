@@ -1,5 +1,6 @@
-package com.example.gymadmin.screens
+package com.example.gymadmin.Screens
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -32,16 +33,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.gymadmin.R
+
 
 
 @Composable
@@ -50,6 +52,13 @@ fun LoginScreen(navController: NavHostController) {
         Font(R.font.inter, FontWeight.Light),
     )
 
+    var name by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
+    val user="admin"
+    val pass="admin123"
+
+    val context=LocalContext.current
 
     Surface {
         Box(modifier=Modifier.fillMaxSize()) {
@@ -77,7 +86,7 @@ fun LoginScreen(navController: NavHostController) {
                     .fillMaxWidth(.8f)
                     .padding(top = 50.dp),
                     horizontalArrangement = Arrangement.Start){
-                    Text(text = "Login",
+                    Text(text = "Sign Up",
                         color = Color(0xFFE41B1B),
                         fontFamily = InterFamily,
                         fontWeight = FontWeight.Bold,
@@ -88,7 +97,7 @@ fun LoginScreen(navController: NavHostController) {
 
                 Row (modifier=Modifier.fillMaxWidth(.8f),
                     horizontalArrangement = Arrangement.Start){
-                    Text(text = "with your FitForensic\ncredentials",
+                    Text(text = "with your Admin\ncredentials",
                         color = Color(0xFF313131),
                         fontFamily = InterFamily,
                         fontWeight = FontWeight.Bold,
@@ -99,13 +108,11 @@ fun LoginScreen(navController: NavHostController) {
 
 
                 Card(modifier = Modifier
-                    .fillMaxHeight(.65f)
+                    .fillMaxHeight(.7f)
                     .fillMaxWidth(.8f)
                     .padding(10.dp),
                     colors = CardDefaults.cardColors(Color(0xff131313))) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        var name by remember { mutableStateOf("") }
-                        var password by remember { mutableStateOf("") }
 
                         Row (modifier=Modifier.fillMaxWidth(.9f),
                             horizontalArrangement = Arrangement.Start){
@@ -119,7 +126,7 @@ fun LoginScreen(navController: NavHostController) {
                         TextField(modifier= Modifier
                             .padding(top = 10.dp)
                             .fillMaxWidth(.8f)
-                            .height(30.dp)
+                            .fillMaxHeight(.18f)
                             .clip(RoundedCornerShape(20.dp))
                             .background(Color(0xFFC6C6C6)),
                             value = name,
@@ -142,7 +149,7 @@ fun LoginScreen(navController: NavHostController) {
                         TextField(modifier= Modifier
                             .padding(top = 10.dp)
                             .fillMaxWidth(.8f)
-                            .height(30.dp)
+                            .fillMaxHeight(.3f)
                             .clip(RoundedCornerShape(20.dp))
                             .background(Color(0xFFC6C6C6)),
                             value = password,
@@ -168,10 +175,18 @@ fun LoginScreen(navController: NavHostController) {
                             .padding(top = 20.dp)
                             .border(1.dp, Color(0xFFFFFFFF), RoundedCornerShape(6.dp)),
                             shape = RoundedCornerShape(5.dp),
-                            onClick = { navController.navigate("home") },
+                            onClick = {
+                                    if(name==user && password==pass){
+                                        navController.navigate("home")
+                                        Toast.makeText(context,"Signed Up, Login Now",Toast.LENGTH_LONG).show()
+                                    }
+                                    else{
+                                        Toast.makeText(context,"couldnt login, try again",Toast.LENGTH_LONG).show()
+                                    }
+                                 },
                             colors=ButtonDefaults.buttonColors(Color(0xFFBF4846))) {
                             Text(
-                                text = "LOGIN",
+                                text = "Login",
                                 fontFamily = InterFamily,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 20.sp

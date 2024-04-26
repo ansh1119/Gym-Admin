@@ -1,4 +1,4 @@
-package com.example.gymadmin.screens
+package com.example.gymadmin.Screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -32,7 +32,7 @@ import androidx.navigation.NavHostController
 import com.example.gymadmin.R
 import kotlinx.coroutines.delay
 
-@Preview(showBackground = true)
+
 @Composable
 fun FirstScreen(navController: NavHostController) {
 

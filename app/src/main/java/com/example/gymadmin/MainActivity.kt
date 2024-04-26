@@ -4,9 +4,22 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.example.gymadmin.Data.Item
+import com.google.firebase.FirebaseApp
 
 
 class MainActivity : ComponentActivity() {
+
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        FirebaseApp.initializeApp(this)
+        setContent {
+            Nav()
+        }
+    }
 
     companion object{
         var items= listOf(
@@ -53,12 +66,5 @@ class MainActivity : ComponentActivity() {
                 date = "8/9/2023"
             ),
         )
-    }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            Nav()
-        }
     }
 }
