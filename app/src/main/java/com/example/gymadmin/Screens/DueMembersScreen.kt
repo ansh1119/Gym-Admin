@@ -125,13 +125,13 @@ if(item.gender=="male") {
         Spacer(modifier = Modifier.width(10.dp))
 
         Column{
-            Text(text = item.name,style=TextStyle(
+            Text(text = item.firstName,style=TextStyle(
                 fontSize=20.sp,
                 fontWeight=FontWeight.SemiBold,
             ))
             Spacer(modifier = Modifier.height(3.dp))
 
-            Text(text = item.number.toString(),style=TextStyle(
+            Text(text = item.phone.toString(),style=TextStyle(
                 fontSize=12.sp,
             ))
         }
@@ -147,7 +147,7 @@ if(item.gender=="male") {
             ))
             Spacer(modifier = Modifier.height(3.dp))
 
-            Text(text = item.date,style=TextStyle(
+            Text(text = item.startingDate.toString(),style=TextStyle(
                 fontSize=12.sp,
             ))
         }
