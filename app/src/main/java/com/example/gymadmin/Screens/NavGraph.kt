@@ -1,6 +1,5 @@
-package com.example.gymadmin
+package com.example.gymadmin.Screens
 
-import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -10,13 +9,11 @@ import androidx.compose.runtime.setValue
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.gymadmin.screens.FirstScreen
-import com.example.gymadmin.screens.LoginScreen
-import com.example.gymadmin.screens.SignUpScreen
+import com.example.gymadmin.FirebaseAuthManager
 import kotlinx.coroutines.delay
 
 @Composable
-fun Nav() {
+fun Nav(authManager: FirebaseAuthManager) {
 
     val navController=rememberNavController()
     var show by remember { mutableStateOf(true) }
@@ -31,11 +28,17 @@ fun Nav() {
                 FirstScreen(navController)
             }
             else{
-                SignUpScreen(navController)
+                SignUpScreen(navController,authManager)
             }
         }
         composable(route="login"){
-            LoginScreen(navController)
+            LoginScreen(navController, authManager = authManager)
+        }
+        composable(route="home"){
+            HomeScreen(navController)
+        }
+        composable(route="due"){
+            DueMemberScreen(navController = navController)
         }
     }
 }

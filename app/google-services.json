@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "854484253428",
+    "project_id": "gym-app-ec854",
+    "storage_bucket": "gym-app-ec854.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:854484253428:android:05549c7e9799544340fca1",
+        "android_client_info": {
+          "package_name": "com.example.gymadmin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBK8qsZvAVEGS7fJOtij_MQr6d8_ev2AJ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

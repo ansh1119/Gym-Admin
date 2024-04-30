@@ -1,7 +1,7 @@
-package com.example.gymadmin.screens
+package com.example.gymadmin.Screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,18 +37,22 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.gymadmin.FirebaseAuthManager
 import com.example.gymadmin.R
 
 
+
 @Composable
-fun SignUpScreen(navController: NavHostController) {
+fun SignUpScreen(navController: NavHostController, authManager: FirebaseAuthManager) {
     val InterFamily = FontFamily(
         Font(R.font.inter, FontWeight.Light),
     )
+
+    var name by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
 
 
     Surface {
@@ -99,13 +103,11 @@ fun SignUpScreen(navController: NavHostController) {
 
 
                 Card(modifier = Modifier
-                    .fillMaxHeight(.65f)
+                    .fillMaxHeight(.7f)
                     .fillMaxWidth(.8f)
                     .padding(10.dp),
                     colors = CardDefaults.cardColors(Color(0xff131313))) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        var name by remember { mutableStateOf("") }
-                        var password by remember { mutableStateOf("") }
 
                         Row (modifier=Modifier.fillMaxWidth(.9f),
                             horizontalArrangement = Arrangement.Start){
@@ -117,11 +119,10 @@ fun SignUpScreen(navController: NavHostController) {
                         }
 
                         TextField(modifier= Modifier
-                            .padding(top = 10.dp)
+                            .padding(top=10.dp)
                             .fillMaxWidth(.8f)
-                            .height(30.dp)
-                            .clip(RoundedCornerShape(20.dp))
-                            .background(Color(0xFFC6C6C6)),
+                            .fillMaxHeight(.18f)
+                            .clip(RoundedCornerShape(20.dp)),
                             value = name,
                             onValueChange = {name=it},
                             textStyle = TextStyle(color = Color.Black)
@@ -140,13 +141,15 @@ fun SignUpScreen(navController: NavHostController) {
                         }
 
                         TextField(modifier= Modifier
-                            .padding(top = 10.dp)
+                            .padding(top=10.dp)
                             .fillMaxWidth(.8f)
-                            .height(30.dp)
-                            .clip(RoundedCornerShape(20.dp))
-                            .background(Color(0xFFC6C6C6)),
+                            .fillMaxHeight(.3f)
+                            .clip(RoundedCornerShape(20.dp)),
                             value = password,
-                            onValueChange = {password=it})
+                            onValueChange = {password=it},
+                            textStyle = TextStyle(color = Color.Black)
+                        )
+
 
 
                         Row(modifier= Modifier
@@ -168,7 +171,16 @@ fun SignUpScreen(navController: NavHostController) {
                             .padding(top = 20.dp)
                             .border(1.dp, Color(0xFFFFFFFF), RoundedCornerShape(6.dp)),
                             shape = RoundedCornerShape(5.dp),
-                            onClick = { navController.navigate("login") },
+                            onClick = {
+                                authManager.signup(name , password) { task ->
+                                    if (task.isSuccessful) {
+                                        Log.d("SignUpScreen", "sign up successful")
+                                    }
+                                    else {
+                                        Log.e("SignUpScreen", "Error signing up", task.exception)
+                                    }
+                                     }
+                            },
                             colors=ButtonDefaults.buttonColors(Color(0xFFBF4846))) {
                             Text(
                                 text = "LOGIN",

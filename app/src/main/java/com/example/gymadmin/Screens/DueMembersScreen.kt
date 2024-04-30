@@ -26,11 +26,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.gymadmin.Item
+import com.example.gymadmin.data.Item
 import com.example.gymadmin.MainActivity
 import com.example.gymadmin.R
 
@@ -47,9 +46,9 @@ import com.example.gymadmin.R
 
 
 @Composable
-fun DueMemberScreen(navController: NavController,time:String){
+fun DueMemberScreen(navController: NavController){
     val context = LocalContext.current
-    val date=time
+    val date="hello"
     Surface(color = Color(0xFFDAD9D4),
         modifier = Modifier.
                 fillMaxSize()){
@@ -75,7 +74,7 @@ fun DueMemberScreen(navController: NavController,time:String){
 //                    fontFamily = PoppinsFamily
                     )
             )
-            
+
             LazyColumn(
                 modifier=Modifier.fillMaxSize()
                     .padding(10.dp),
@@ -138,7 +137,7 @@ if(item.gender=="male") {
         }
 
         Spacer(modifier = Modifier.width(110.dp))
-        
+
         Column(horizontalAlignment = Alignment.End,
         verticalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxHeight()){

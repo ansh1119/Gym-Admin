@@ -1,4 +1,4 @@
-package com.example.gymadmin.screens
+package com.example.gymadmin.Screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -37,15 +37,16 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.input.KeyboardType.Companion.Text
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.gymadmin.FirebaseAuthManager
 import com.example.gymadmin.R
 
 
 @Composable
-fun LoginScreen(navController: NavHostController) {
+fun LoginScreen(navController: NavHostController,authManager: FirebaseAuthManager) {
     val InterFamily = FontFamily(
         Font(R.font.inter, FontWeight.Light),
     )
@@ -77,6 +78,7 @@ fun LoginScreen(navController: NavHostController) {
                     .fillMaxWidth(.8f)
                     .padding(top = 50.dp),
                     horizontalArrangement = Arrangement.Start){
+
                     Text(text = "Login",
                         color = Color(0xFFE41B1B),
                         fontFamily = InterFamily,
@@ -168,7 +170,15 @@ fun LoginScreen(navController: NavHostController) {
                             .padding(top = 20.dp)
                             .border(1.dp, Color(0xFFFFFFFF), RoundedCornerShape(6.dp)),
                             shape = RoundedCornerShape(5.dp),
-                            onClick = { navController.navigate("home") },
+                            onClick = {
+                                authManager.login(name, password) { task ->
+                                    if (task.isSuccessful) {
+                                        navController.navigate("home")
+                                    } else {
+                                        //ERRORRRRR!!!!!!!!
+                                    }
+                                }
+                                      },
                             colors=ButtonDefaults.buttonColors(Color(0xFFBF4846))) {
                             Text(
                                 text = "LOGIN",
