@@ -25,23 +25,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.gymadmin.data.Item
+import com.example.gymadmin.Data.Item
 import com.example.gymadmin.MainActivity
 import com.example.gymadmin.R
 
 
-//val InterFamily = FontFamily(
-//    Font(R.font.inter, FontWeight.Light),
-//
-//    )
-//val PoppinsFamily = FontFamily(
-//    Font(R.font.poppins, FontWeight.Light),
-//
-//    )
+val InterFamily = FontFamily(
+    Font(R.font.inter, FontWeight.Light),
+
+    )
+val PoppinsFamily = FontFamily(
+    Font(R.font.poppins, FontWeight.Light),
+
+    )
 
 
 
@@ -81,11 +83,6 @@ fun DueMemberScreen(navController: NavController){
                 contentPadding= PaddingValues(10.dp),
             ){
 
-
-                itemsIndexed(MainActivity.items){ index, item ->
-                    ColumnItems(item)
-                    Spacer(modifier = Modifier.height(10.dp))
-                }
             }
 
             }
@@ -125,13 +122,13 @@ if(item.gender=="male") {
         Spacer(modifier = Modifier.width(10.dp))
 
         Column{
-            Text(text = item.name,style=TextStyle(
+            Text(text = item.firstName,style=TextStyle(
                 fontSize=20.sp,
                 fontWeight=FontWeight.SemiBold,
             ))
             Spacer(modifier = Modifier.height(3.dp))
 
-            Text(text = item.number.toString(),style=TextStyle(
+            Text(text = item.phone.toString(),style=TextStyle(
                 fontSize=12.sp,
             ))
         }
@@ -147,7 +144,7 @@ if(item.gender=="male") {
             ))
             Spacer(modifier = Modifier.height(3.dp))
 
-            Text(text = item.date,style=TextStyle(
+            Text(text = item.startingDate.toString(),style=TextStyle(
                 fontSize=12.sp,
             ))
         }

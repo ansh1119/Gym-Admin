@@ -46,10 +46,17 @@ import com.example.gymadmin.R
 
 
 @Composable
-fun LoginScreen(navController: NavHostController,authManager: FirebaseAuthManager) {
+fun LoginScreen(navController: NavHostController) {
     val InterFamily = FontFamily(
         Font(R.font.inter, FontWeight.Light),
     )
+
+    val actualUsername="admin"
+    val actualPassword="admin123"
+
+
+    var name by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
 
 
     Surface {
@@ -106,8 +113,7 @@ fun LoginScreen(navController: NavHostController,authManager: FirebaseAuthManage
                     .padding(10.dp),
                     colors = CardDefaults.cardColors(Color(0xff131313))) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        var name by remember { mutableStateOf("") }
-                        var password by remember { mutableStateOf("") }
+
 
                         Row (modifier=Modifier.fillMaxWidth(.9f),
                             horizontalArrangement = Arrangement.Start){
@@ -171,12 +177,8 @@ fun LoginScreen(navController: NavHostController,authManager: FirebaseAuthManage
                             .border(1.dp, Color(0xFFFFFFFF), RoundedCornerShape(6.dp)),
                             shape = RoundedCornerShape(5.dp),
                             onClick = {
-                                authManager.login(name, password) { task ->
-                                    if (task.isSuccessful) {
-                                        navController.navigate("home")
-                                    } else {
-                                        //ERRORRRRR!!!!!!!!
-                                    }
+                                if(name==actualUsername && password==actualPassword){
+                                    navController.navigate("home")
                                 }
                                       },
                             colors=ButtonDefaults.buttonColors(Color(0xFFBF4846))) {

@@ -7,7 +7,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.example.gymadmin.Screens.Nav
 import com.example.gymadmin.Screens.NewMemberScreen
-import com.example.gymadmin.data.Item
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -25,58 +24,4 @@ class MainActivity : ComponentActivity() {
            NewMemberScreen()
         }
     }
-
-    companion object{
-        var items= listOf(
-            Item(
-                gender = "male",
-                name = "Ajeesh Rawal",
-                number = 7393085376,
-                duration = 3,
-                date = "8/9/2023",
-                dob="13/11/2003"
-            ),
-            Item(
-                gender = "male",
-                name = "Ajeesh Rawal",
-                number = 7393085376,
-                duration = 3,
-                date = "8/9/2023",
-                dob="13/11/2003"
-            ),
-            Item(
-                gender = "male",
-                name = "Ajeesh Rawal",
-                number = 7393085376,
-                duration = 3,
-                date = "8/9/2023",
-                dob="13/11/2003"
-            ),
-            Item(
-                gender = "male",
-                name = "Ajeesh Rawal",
-                number = 7393085376,
-                duration = 3,
-                date = "8/9/2023",
-                dob="13/11/2003"
-            ),
-            Item(
-                gender = "male",
-                name = "Ajeesh Rawal",
-                number = 7393085376,
-                duration = 3,
-                date = "8/9/2023",
-                dob="13/11/2003"
-            ),
-            Item(
-                gender = "male",
-                name = "Ajeesh Rawal",
-                number = 7393085376,
-                duration = 3,
-                date = "8/9/2023",
-                dob="13/11/2003"
-            ),
-        )
-    }
-
 }

@@ -28,11 +28,8 @@ fun Nav(authManager: FirebaseAuthManager) {
                 FirstScreen(navController)
             }
             else{
-                SignUpScreen(navController,authManager)
+                LoginScreen(navController)
             }
-        }
-        composable(route="login"){
-            LoginScreen(navController, authManager = authManager)
         }
         composable(route="home"){
             HomeScreen(navController)

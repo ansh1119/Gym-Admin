@@ -1,10 +1,15 @@
-package com.example.gymadmin.data
+package com.example.gymadmin.Data
+
+import java.time.Instant
+import java.time.LocalDate
 
 data class Item(
+    var firstName:String,
+    var lastName:String,
     var gender:String,
-    var name:String,
-    var number: Long,
-    var duration: Int,
-    var date:String,
-    var dob:String
+    var duration: Long,
+    var phone:String,
+    var dob:String,
+    var startingDate: LocalDate,
+    var endingaDate:LocalDate
 )
