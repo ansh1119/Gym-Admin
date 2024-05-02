@@ -11,12 +11,11 @@ import androidx.compose.runtime.setValue
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.gymadmin.FirebaseAuthManager
 import kotlinx.coroutines.delay
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun Nav(authManager: FirebaseAuthManager) {
+fun Nav() {
 
     val navController=rememberNavController()
     var show by remember { mutableStateOf(true) }
