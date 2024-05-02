@@ -114,24 +114,10 @@ fun NewMemberScreen() {
         mutableStateOf(false)
     }
 
-    var actualDuration=0
-
-    if(duration.equals("1 Month")){
-        actualDuration=1
+    var actualDuration by remember {
+        mutableStateOf(0)
     }
-    if(duration.equals("3 Months")){
-        actualDuration=3
-    }
-    if(duration.equals("6 Months")){
-        actualDuration=6
-    }
-    if(duration.equals("12 Months")){
-        actualDuration=12
-    }
-    else{
-        actualDuration=0;
-    }
-
+    endingDate=startDate.plusMonths(actualDuration.toLong())
     val endFormattedDate by remember {
         derivedStateOf {
             DateTimeFormatter
@@ -365,6 +351,7 @@ Surface(color = Color(0xFFDAD9D4),
                         onClick = {
                             duration = "1 Month"
                             isExpandedDuration = false
+                            actualDuration=1
                         }
                     )
                     DropdownMenuItem(
@@ -376,6 +363,7 @@ Surface(color = Color(0xFFDAD9D4),
                         onClick = {
                             duration = "3 Months"
                             isExpandedDuration = false
+                            actualDuration=3
                         }
                     )
                     DropdownMenuItem(
@@ -387,6 +375,7 @@ Surface(color = Color(0xFFDAD9D4),
                         onClick = {
                             duration = "6 Months"
                             isExpandedDuration = false
+                            actualDuration=6
                         }
                     )
                     DropdownMenuItem(
@@ -398,6 +387,7 @@ Surface(color = Color(0xFFDAD9D4),
                         onClick = {
                             duration = "12 Months"
                             isExpandedDuration = false
+                            actualDuration=12
                         }
                     )
                 }
@@ -501,17 +491,11 @@ Surface(color = Color(0xFFDAD9D4),
             } )
 
 
-        Button(modifier= Modifier
-            .fillMaxWidth()
-            .padding(start = 10.dp, end = 10.dp),
-            colors=ButtonDefaults
-                .buttonColors(Color.White),
-            onClick = { endCalendarState.show() } ){
+
             Text(
                 text = "End Date = ${endFormattedDate}",
                 color = Color.Black
             )
-        }
 
         var item=Item(first,last,gender,actualDuration.toLong(),phone,dob, startDate, endingDate)
 
