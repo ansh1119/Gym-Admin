@@ -1,5 +1,7 @@
 package com.example.gymadmin.Screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -12,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.gymadmin.FirebaseAuthManager
 import kotlinx.coroutines.delay
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Nav(authManager: FirebaseAuthManager) {
 
@@ -35,7 +38,7 @@ fun Nav(authManager: FirebaseAuthManager) {
             HomeScreen(navController)
         }
         composable(route="due"){
-            DueMemberScreen(navController = navController)
+            DueMemberScreen(navController = navController, time ="" )
         }
     }
 }

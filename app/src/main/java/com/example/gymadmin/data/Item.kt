@@ -11,5 +11,5 @@ data class Item(
     var phone:String,
     var dob:String,
     var startingDate: LocalDate,
-    var endingaDate:LocalDate
+    var endingDate:LocalDate
 )

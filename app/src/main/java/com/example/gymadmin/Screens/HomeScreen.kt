@@ -12,11 +12,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -34,15 +36,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import com.example.gymadmin.R
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavHostController) {
+fun HomeScreen(navController: NavController) {
 
     var date:String
     
-    Surface(onClick = { /*TODO*/ }) {
+    Surface() {
         Column {
             Image(painter = painterResource(id = R.drawable.logo), contentDescription = "logo")
             Row {
@@ -112,7 +115,7 @@ fun HomeScreen(navController: NavHostController) {
                     }
                 }
                 Spacer(modifier = Modifier.weight(.1f))
-                Card(modifier=Modifier.weight(.3f)) {
+                Card(modifier=Modifier.weight(.3f)){
                     Row(modifier=Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center) {
                         Text(text = "Due Today")

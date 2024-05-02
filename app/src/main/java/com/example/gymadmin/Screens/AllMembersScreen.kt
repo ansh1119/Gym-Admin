@@ -30,6 +30,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -38,25 +39,22 @@ import com.example.gymadmin.MainActivity
 import com.example.gymadmin.R
 
 
-val InterFamily = FontFamily(
-    Font(R.font.inter, FontWeight.Light),
-
-    )
-val PoppinsFamily = FontFamily(
-    Font(R.font.poppins, FontWeight.Light),
-
-    )
-
-
-
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun DueMemberScreen(navController: NavController,time:String){
+fun AllMembersScreen(navController: NavController){
+    val InterFamily = FontFamily(
+        Font(R.font.inter, FontWeight.Light),
+
+        )
+    val PoppinsFamily = FontFamily(
+        Font(R.font.poppins, FontWeight.Light),
+
+        )
+
     val context = LocalContext.current
-    val date=time
     Surface(color = Color(0xFFDAD9D4),
         modifier = Modifier.
-                fillMaxSize()){
+        fillMaxSize()){
         Column(modifier = Modifier.
         padding(2.dp)) {
             Image(painter = painterResource(id = R.drawable.logo) , contentDescription = "logo",
@@ -64,22 +62,22 @@ fun DueMemberScreen(navController: NavController,time:String){
                     .fillMaxWidth(0.4f)
                     .padding(start = 10.dp)
                     .height(60.dp)
-                )
+            )
 
             Divider(color=Color(0xFFC6C6C6), thickness = 2.dp,
                 modifier=Modifier.padding(start=10.dp, end = 10.dp))
 
             Spacer(Modifier.height(10.dp))
 
-            Text(text ="Membership Ending \n$date",
+            Text(text ="All Members",
                 modifier=Modifier.padding(start=10.dp),
                 style = TextStyle(
                     fontSize = 30.sp,
                     fontWeight = FontWeight.SemiBold,
                     fontFamily = PoppinsFamily
-                    )
+                )
             )
-            
+
             LazyColumn(
                 modifier=Modifier.fillMaxSize()
                     .padding(10.dp),
@@ -93,71 +91,75 @@ fun DueMemberScreen(navController: NavController,time:String){
                 }
             }
 
-            }
-
         }
-    }
-
-@Composable
-fun ColumnItems(item: Item){
-    Row(
-        modifier= Modifier
-            .background(color = Color.White)
-            .fillMaxWidth()
-            .height(70.dp)
-            .padding(10.dp)
-    ) {
-if(item.gender=="male") {
-    Image(
-        painter = painterResource(id = R.drawable.gender_male), contentDescription = "Male",
-        modifier = Modifier
-            .width(30.dp)
-            .height(30.dp)
-            .padding(10.dp)
-    )
-}
-        else if(item.gender=="female")
-{
-    Image(
-        painter = painterResource(id = R.drawable.gender_female), contentDescription = "Male",
-        modifier = Modifier
-            .width(30.dp)
-            .height(30.dp)
-            .padding(10.dp)
-    )
-}
-
-        Spacer(modifier = Modifier.width(10.dp))
-
-        Column{
-            Text(text = item.firstName,style=TextStyle(
-                fontSize=20.sp,
-                fontWeight=FontWeight.SemiBold,
-            ))
-            Spacer(modifier = Modifier.height(3.dp))
-
-            Text(text = item.phone.toString(),style=TextStyle(
-                fontSize=12.sp,
-            ))
-        }
-
-        Spacer(modifier = Modifier.width(110.dp))
-        
-        Column(horizontalAlignment = Alignment.End,
-        verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxHeight()){
-            var duration=item.duration
-            Text(text = "$duration Months",style=TextStyle(
-                fontSize=12.sp,
-            ))
-            Spacer(modifier = Modifier.height(3.dp))
-
-            Text(text = item.startingDate.toString(),style=TextStyle(
-                fontSize=12.sp,
-            ))
-        }
-
 
     }
-
 }
+
+//@Composable
+//fun ColumnItems(item: Item){
+//    Row(
+//        modifier= Modifier
+//            .background(color = Color.White)
+//            .fillMaxWidth()
+//            .height(70.dp)
+//            .padding(10.dp)
+//    ) {
+//        if(item.gender=="male") {
+//            Image(
+//                painter = painterResource(id = R.drawable.gender_male), contentDescription = "Male",
+//                modifier = Modifier
+//                    .width(30.dp)
+//                    .height(30.dp)
+//                    .padding(10.dp)
+//            )
+//        }
+//        else if(item.gender=="female")
+//        {
+//            Image(
+//                painter = painterResource(id = R.drawable.gender_female), contentDescription = "Male",
+//                modifier = Modifier
+//                    .width(30.dp)
+//                    .height(30.dp)
+//                    .padding(10.dp)
+//            )
+//        }
+//
+//        Spacer(modifier = Modifier.width(10.dp))
+//
+//        Column{
+//            Text(text = item.name,style=TextStyle(
+//                fontSize=20.sp,
+//                fontWeight=FontWeight.SemiBold,
+//                fontFamily = PoppinsFamily
+//            ))
+//            Spacer(modifier = Modifier.height(3.dp))
+//
+//            Text(text = item.number.toString(),style=TextStyle(
+//                fontSize=12.sp,
+//                fontFamily = PoppinsFamily
+//            ))
+//        }
+//
+//        Spacer(modifier = Modifier.width(110.dp))
+//
+//        Column(horizontalAlignment = Alignment.End,
+//            verticalArrangement = Arrangement.Center,
+//            modifier = Modifier.fillMaxHeight()){
+//            var duration=item.duration
+//            Text(text = "$duration Months",style=TextStyle(
+//                fontSize=12.sp,
+//                fontFamily = PoppinsFamily
+//            ))
+//            Spacer(modifier = Modifier.height(3.dp))
+//
+//            Text(text = item.date,style=TextStyle(
+//                fontSize=12.sp,
+//                fontFamily = PoppinsFamily
+//            ))
+//        }
+//
+//
+//    }
+//
+//}

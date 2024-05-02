@@ -1,27 +1,97 @@
 package com.example.gymadmin
 
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.example.gymadmin.Screens.Nav
+import androidx.annotation.RequiresApi
+import com.example.gymadmin.Data.Item
 import com.example.gymadmin.Screens.NewMemberScreen
 import com.google.firebase.FirebaseApp
-import com.google.firebase.firestore.FirebaseFirestore
+import java.time.Instant.now
+import java.time.LocalDate
 
 
 class MainActivity : ComponentActivity() {
 
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FirebaseApp.initializeApp(this)
-        Log.d("TAG", "FirebaseApp initialized")
-        val db = FirebaseFirestore.getInstance()
-        val authManager = FirebaseAuthManager()
         enableEdgeToEdge()
+        FirebaseApp.initializeApp(this)
         setContent {
-           NewMemberScreen()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NewMemberScreen()
+            }
         }
+    }
+
+    companion object{
+        @RequiresApi(Build.VERSION_CODES.O)
+        var items= listOf(
+            Item(
+                firstName = "Ajeesh",
+                lastName = "Rawal",
+                gender = "male",
+                duration = 3,
+                phone= "7393085376",
+                dob= "8/9/2003",
+                startingDate = LocalDate.now(),
+                endingDate = LocalDate.now().plusMonths(3)
+            ),
+            Item(
+                firstName = "Ajeesh",
+                lastName = "Rawal",
+                gender = "male",
+                duration = 3,
+                phone= "7393085376",
+                dob= "8/9/2003",
+                startingDate = LocalDate.now(),
+                endingDate = LocalDate.now().plusMonths(3)
+            ),
+            Item(
+                firstName = "Ajeesh",
+                lastName = "Rawal",
+                gender = "male",
+                duration = 3,
+                phone= "7393085376",
+                dob= "8/9/2003",
+                startingDate = LocalDate.now(),
+                endingDate = LocalDate.now().plusMonths(3)
+            ),
+            Item(
+                firstName = "Ajeesh",
+                lastName = "Rawal",
+                gender = "male",
+                duration = 3,
+                phone= "7393085376",
+                dob= "8/9/2003",
+                startingDate = LocalDate.now(),
+                endingDate = LocalDate.now().plusMonths(3)
+            ),
+            Item(
+                firstName = "Ajeesh",
+                lastName = "Rawal",
+                gender = "male",
+                duration = 3,
+                phone= "7393085376",
+                dob= "8/9/2003",
+                startingDate = LocalDate.now(),
+                endingDate = LocalDate.now().plusMonths(3)
+            ),
+            Item(
+                firstName = "Ajeesh",
+                lastName = "Rawal",
+                gender = "male",
+                duration = 3,
+                phone= "7393085376",
+                dob= "8/9/2003",
+                startingDate = LocalDate.now(),
+                endingDate = LocalDate.now().plusMonths(3)
+            ),
+        )
     }
 }
