@@ -48,6 +48,8 @@ import com.example.gymadmin.R
 import com.google.firebase.firestore.FirebaseFirestore
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
 import com.maxkeppeker.sheets.core.models.base.rememberSheetState
 import com.maxkeppeler.sheets.calendar.CalendarDialog
 import com.maxkeppeler.sheets.calendar.models.CalendarConfig
@@ -168,7 +170,7 @@ Surface(color = Color(0xFFDAD9D4),
             onValueChange = {
                 first = it
             },
-            placeholder = { Text(text = "First Name") },
+            placeholder = { Text(text = "First Name", fontFamily = PoppinsFamily) },
             shape = RoundedCornerShape(10.dp),
             leadingIcon = {Image(painter = painterResource(id = R.drawable.textfeildone), contentDescription ="logo" ,Modifier.width(20.dp))},
             colors = OutlinedTextFieldDefaults
@@ -196,7 +198,7 @@ Surface(color = Color(0xFFDAD9D4),
             onValueChange = {
                 last = it
             },
-            placeholder = { Text(text = "Last Name") },
+            placeholder = { Text(text = "Last Name", fontFamily = PoppinsFamily) },
             shape = RoundedCornerShape(10.dp),
             leadingIcon = {Image(painter = painterResource(id = R.drawable.textfeildone), contentDescription ="logo" ,Modifier.width(20.dp))},
             colors = OutlinedTextFieldDefaults
@@ -219,11 +221,11 @@ Surface(color = Color(0xFFDAD9D4),
 
         Row(modifier = Modifier
             .fillMaxWidth()
-            .padding(20.dp))
+            .padding(10.dp))
         {
             ExposedDropdownMenuBox(expanded = isExpandedGender,
                 modifier = Modifier
-                    .weight(0.4f), onExpandedChange = {
+                    .weight(0.5f), onExpandedChange = {
                 isExpandedGender = it
             }
             )
@@ -232,6 +234,8 @@ Surface(color = Color(0xFFDAD9D4),
                     value = gender,
                     onValueChange = {},
                     readOnly = true,
+                    textStyle = TextStyle(color = Color(0xff636363), fontSize = 16.sp, fontFamily = PoppinsFamily),
+                    shape = RoundedCornerShape(10.dp),
                     trailingIcon = {
                         Image(
                             painter = painterResource(id = R.drawable.dropdown),
@@ -300,7 +304,7 @@ Surface(color = Color(0xFFDAD9D4),
 
             ExposedDropdownMenuBox(
                 expanded = isExpandedDuration,
-                modifier=Modifier.weight(0.4f), onExpandedChange = {
+                modifier=Modifier.weight(0.5f), onExpandedChange = {
                     isExpandedDuration = it
                 }
             )
@@ -309,6 +313,8 @@ Surface(color = Color(0xFFDAD9D4),
                     value = duration,
                     onValueChange = {},
                     readOnly = true,
+                    textStyle = TextStyle(color = Color(0xff636363),fontSize = 16.sp, fontFamily=PoppinsFamily),
+                    shape = RoundedCornerShape(10.dp),
                     trailingIcon = {
                         Image(
                             painter = painterResource(id = R.drawable.dropdown),
@@ -408,7 +414,7 @@ Surface(color = Color(0xFFDAD9D4),
             onValueChange = {
                 phone = it
             },
-            placeholder = { Text(text = "Phone Number") },
+            placeholder = { Text(text = "Phone Number",fontFamily=PoppinsFamily) },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Phone),
             shape = RoundedCornerShape(10.dp),
             leadingIcon = {Image(painter = painterResource(id = R.drawable.textfeildone), contentDescription ="logo" ,Modifier.width(20.dp))},
@@ -437,7 +443,7 @@ Surface(color = Color(0xFFDAD9D4),
             onValueChange = {
                 dob = it
             },
-            placeholder = { Text(text = "DoB") },
+            placeholder = { Text(text = "DoB",fontFamily=PoppinsFamily) },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Phone),
             shape = RoundedCornerShape(10.dp),
             leadingIcon = {Image(painter = painterResource(id = R.drawable.calendaricon), contentDescription ="logo" ,Modifier.width(20.dp))},
@@ -455,6 +461,7 @@ Surface(color = Color(0xFFDAD9D4),
                     unfocusedLeadingIconColor = Color(0xff636363),
                 ),
         )
+
         Spacer(modifier = Modifier.height(20.dp))
 
 
@@ -470,13 +477,17 @@ Surface(color = Color(0xFFDAD9D4),
 
         Button(modifier= Modifier
             .fillMaxWidth()
+            .height(50.dp)
             .padding(start = 10.dp, end = 10.dp),
+            shape = RoundedCornerShape(10.dp),
             colors=ButtonDefaults
                 .buttonColors(Color.White),
             onClick = { startCalendarState.show() } ){
             Text(
-                text = "Start Date = ${startFormattedDate}",
-                color = Color.Black
+                text = "Start Date: ${startFormattedDate}",
+                fontSize = 16.sp,
+                fontFamily = PoppinsFamily,
+                color = Color(0XFF636363)
             )
         }
 
@@ -490,17 +501,36 @@ Surface(color = Color(0xFFDAD9D4),
                 endingDate=date
             } )
 
-
+            Spacer(modifier = Modifier.height(20.dp))
 
             Text(
-                text = "End Date = ${endFormattedDate}",
-                color = Color.Black
+                text = "End Date Calculated= ${endFormattedDate}",
+                fontSize = 16.sp,
+                color = Color.Black,
+                fontFamily = PoppinsFamily,
+                textAlign = TextAlign.Center,
+                modifier=Modifier
+                    .fillMaxWidth()
             )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+
 
         var item=Item(first,last,gender,actualDuration.toLong(),phone,dob, startDate, endingDate)
 
-        Button(onClick = { onAddCustomerClick(item,context) }) {
-            Text(text = "Submit")
+        Button(modifier= Modifier
+            .fillMaxWidth()
+            .padding(start = 10.dp, end = 10.dp)
+            .height(60.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xff000000)),
+            onClick = { onAddCustomerClick(item,context) }) {
+            Text(text = "Join In",
+                fontFamily = PoppinsFamily,
+                fontSize = 24.sp,
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.ExtraBold
+            )
         }
 
 

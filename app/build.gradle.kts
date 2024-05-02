@@ -74,6 +74,8 @@ dependencies {
     implementation(libs.firebase.common.ktx)
     implementation(libs.firebase.firestore.ktx)
 //    implementation(libs.androidx.material3.android)
+    implementation ("com.maxkeppeler.sheets-compose-dialogs:core:1.0.2")
+    implementation ("com.maxkeppeler.sheets-compose-dialogs:calendar:1.0.2")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -81,6 +83,5 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation ("com.maxkeppeler.sheets-compose-dialogs:core:1.0.2")
-    implementation ("com.maxkeppeler.sheets-compose-dialogs:calendar:1.0.2")
+
 }
