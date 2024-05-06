@@ -34,7 +34,7 @@ fun Nav() {
             }
         }
         composable(route="home"){
-            HomeScreen(navController)
+            HomeScreen(/*navController*/)
         }
         composable(route="due"){
             DueMemberScreen(navController = navController, time ="" )

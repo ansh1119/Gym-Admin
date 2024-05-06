@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.gymadmin"
-        minSdk = 24
+        minSdk = 25
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -76,6 +76,7 @@ dependencies {
 //    implementation(libs.androidx.material3.android)
     implementation ("com.maxkeppeler.sheets-compose-dialogs:core:1.0.2")
     implementation ("com.maxkeppeler.sheets-compose-dialogs:calendar:1.0.2")
+    implementation(libs.androidx.compose.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
