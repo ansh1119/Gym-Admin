@@ -8,6 +8,10 @@ android {
     namespace = "com.example.gymadmin"
     compileSdk = 34
 
+    buildFeatures {
+        compose = true
+    }
+
     defaultConfig {
         applicationId = "com.example.gymadmin"
         minSdk = 25

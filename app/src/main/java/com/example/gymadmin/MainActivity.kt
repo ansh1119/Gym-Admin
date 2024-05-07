@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import com.example.gymadmin.Data.Item
+import com.example.gymadmin.Screens.AllMembersScreen
 import com.example.gymadmin.Screens.HomeScreen
 import com.example.gymadmin.Screens.NewMemberScreen
 import com.google.firebase.FirebaseApp
@@ -25,7 +26,7 @@ class MainActivity : ComponentActivity() {
         FirebaseApp.initializeApp(this)
         setContent {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                HomeScreen()
+                AllMembersScreen()
             }
         }
     }
@@ -40,8 +41,8 @@ class MainActivity : ComponentActivity() {
                 duration = 3,
                 phone= "7393085376",
                 dob= "8/9/2003",
-                startingDate = LocalDate.now(),
-                endingDate = LocalDate.now().plusMonths(3)
+                startingDate = LocalDate.now().toString(),
+                endingDate = LocalDate.now().plusMonths(3).toString()
             ),
             Item(
                 firstName = "Ajeesh",
@@ -50,8 +51,8 @@ class MainActivity : ComponentActivity() {
                 duration = 3,
                 phone= "7393085376",
                 dob= "8/9/2003",
-                startingDate = LocalDate.now(),
-                endingDate = LocalDate.now().plusMonths(3)
+                startingDate = LocalDate.now().toString(),
+                endingDate = LocalDate.now().plusMonths(3).toString()
             ),
             Item(
                 firstName = "Ajeesh",
@@ -60,8 +61,8 @@ class MainActivity : ComponentActivity() {
                 duration = 3,
                 phone= "7393085376",
                 dob= "8/9/2003",
-                startingDate = LocalDate.now(),
-                endingDate = LocalDate.now().plusMonths(3)
+                startingDate = LocalDate.now().toString(),
+                endingDate = LocalDate.now().plusMonths(3).toString()
             ),
             Item(
                 firstName = "Ajeesh",
@@ -70,8 +71,8 @@ class MainActivity : ComponentActivity() {
                 duration = 3,
                 phone= "7393085376",
                 dob= "8/9/2003",
-                startingDate = LocalDate.now(),
-                endingDate = LocalDate.now().plusMonths(3)
+                startingDate = LocalDate.now().toString(),
+                endingDate = LocalDate.now().plusMonths(3).toString()
             ),
             Item(
                 firstName = "Ajeesh",
@@ -80,8 +81,8 @@ class MainActivity : ComponentActivity() {
                 duration = 3,
                 phone= "7393085376",
                 dob= "8/9/2003",
-                startingDate = LocalDate.now(),
-                endingDate = LocalDate.now().plusMonths(3)
+                startingDate = LocalDate.now().toString(),
+                endingDate = LocalDate.now().plusMonths(3).toString()
             ),
             Item(
                 firstName = "Ajeesh",
@@ -90,8 +91,8 @@ class MainActivity : ComponentActivity() {
                 duration = 3,
                 phone= "7393085376",
                 dob= "8/9/2003",
-                startingDate = LocalDate.now(),
-                endingDate = LocalDate.now().plusMonths(3)
+                startingDate = LocalDate.now().toString(),
+                endingDate = LocalDate.now().plusMonths(3).toString()
             ),
         )
     }

@@ -1,6 +1,9 @@
 package com.example.gymadmin.Screens
 
+import android.content.ContentValues.TAG
 import android.os.Build
+import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,6 +24,9 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,11 +43,14 @@ import androidx.navigation.NavController
 import com.example.gymadmin.Data.Item
 import com.example.gymadmin.MainActivity
 import com.example.gymadmin.R
+import com.google.firebase.firestore.FirebaseFirestore
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun AllMembersScreen(navController: NavController){
+fun AllMembersScreen(){
     val InterFamily = FontFamily(
         Font(R.font.inter, FontWeight.Light),
 
@@ -51,7 +60,36 @@ fun AllMembersScreen(navController: NavController){
 
         )
 
+    val db = FirebaseFirestore.getInstance()
+    val usersCollection = db.collection("users")
+    val today = LocalDate.now()
+    val list by remember{
+        mutableStateOf(mutableListOf<Item>())
+    }
     val context = LocalContext.current
+
+
+    usersCollection.get().addOnSuccessListener { documents ->
+        Log.d(TAG, "documents accessed")
+        for (document in documents.documents) {
+            Log.d(TAG,"documents k andar")
+            // Convert document to your data class object (see step 6)
+            val user = document.toObject(Item::class.java)!! // Replace User with your data class name
+            // Use the user object and its member variables
+            val joinDate=user.endingDate
+            val localDate = LocalDate.parse(joinDate, DateTimeFormatter.ISO_LOCAL_DATE)
+            var x=today.isBefore(localDate)
+
+            if(today.isBefore(localDate)){
+                list.add(user)
+            }
+        }
+    }.addOnFailureListener { exception ->
+        Toast.makeText(context,"no users",Toast.LENGTH_SHORT).show()
+    }
+
+
+
     Surface(color = Color(0xFFDAD9D4),
         modifier = Modifier.
         fillMaxSize()){
@@ -85,7 +123,7 @@ fun AllMembersScreen(navController: NavController){
             ){
 
 
-                itemsIndexed(MainActivity.items){ index, item ->
+                itemsIndexed(list){ index, item ->
                     ColumnItems(item)
                     Spacer(modifier = Modifier.height(10.dp))
                 }

@@ -130,7 +130,7 @@ if(item.gender=="male") {
         Spacer(modifier = Modifier.width(10.dp))
 
         Column{
-            Text(text = item.firstName,style=TextStyle(
+            Text(text = item.firstName!!,style=TextStyle(
                 fontSize=20.sp,
                 fontWeight=FontWeight.SemiBold,
             ))

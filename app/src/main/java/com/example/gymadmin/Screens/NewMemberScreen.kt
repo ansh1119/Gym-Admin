@@ -517,7 +517,7 @@ Surface(color = Color(0xFFDAD9D4),
 
 
 
-        var item=Item(first,last,gender,actualDuration.toLong(),phone,dob, startDate, endingDate)
+        var item=Item(first,last,gender,actualDuration.toLong(),phone,dob, startDate.toString(), endingDate.toString())
 
         Button(modifier= Modifier
             .fillMaxWidth()
@@ -544,7 +544,7 @@ fun onAddCustomerClick(ob: Item, context:Context) {
 
     // Add customer data to Firestore
     val db = FirebaseFirestore.getInstance()
-    val customerRef = db.collection("users").document(ob.phone)
+    val customerRef = db.collection("users").document(ob.phone!!)
     customerRef.set(ob)
         .addOnSuccessListener {
             Toast.makeText(context, "Member added successfully", Toast.LENGTH_SHORT).show()

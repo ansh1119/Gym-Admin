@@ -306,10 +306,10 @@ fun  HomeScreen(/*navController: NavController*/) {
                     text=it
                 } )
                 Spacer(modifier = Modifier.width(5.dp))
-                Button(modifier=Modifier
-                                .fillMaxHeight(0.35f)
-                                .width(IntrinsicSize.Min)
-                                .clip(RoundedCornerShape(2.dp)),
+                Button(modifier= Modifier
+                    .fillMaxHeight(0.35f)
+                    .width(IntrinsicSize.Min)
+                    .clip(RoundedCornerShape(2.dp)),
                     colors = ButtonDefaults
                         .buttonColors(
                             containerColor =Color(0xffBF4846)
