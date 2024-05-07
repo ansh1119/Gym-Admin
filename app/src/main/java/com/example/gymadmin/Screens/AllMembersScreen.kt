@@ -40,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.gymadmin.Components.ColumnItems
 import com.example.gymadmin.Data.Item
 import com.example.gymadmin.MainActivity
 import com.example.gymadmin.R
@@ -115,22 +116,7 @@ fun AllMembersScreen(){
                     fontFamily = PoppinsFamily
                 )
             )
-
-            LazyColumn(
-                modifier=Modifier.fillMaxSize()
-                    .padding(10.dp),
-                contentPadding= PaddingValues(10.dp),
-            ){
-
-
-                itemsIndexed(list){ index, item ->
-                    ColumnItems(item)
-                    Spacer(modifier = Modifier.height(10.dp))
-                }
-            }
-
         }
-
     }
 }
 

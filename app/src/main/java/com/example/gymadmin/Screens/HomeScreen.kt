@@ -37,6 +37,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,7 +55,9 @@ import com.example.gymadmin.R
 fun  HomeScreen(/*navController: NavController*/) {
 
     var date:String
-
+    val PoppinsFamily = FontFamily(
+    Font(R.font.poppins, FontWeight.Light),
+    )
     
     Surface(color = Color(0xffDAD9D4),
     modifier=Modifier.fillMaxHeight()) {
