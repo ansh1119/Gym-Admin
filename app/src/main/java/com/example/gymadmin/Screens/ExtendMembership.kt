@@ -2,6 +2,7 @@ package com.example.gymadmin.Screens
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
@@ -50,6 +51,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
+import com.google.firebase.firestore.toObject
 import com.maxkeppeker.sheets.core.models.base.rememberSheetState
 import com.maxkeppeler.sheets.calendar.CalendarDialog
 import com.maxkeppeler.sheets.calendar.models.CalendarConfig
@@ -61,7 +63,7 @@ import java.time.format.DateTimeFormatter
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
 @Composable
-fun ExtendMembershipScreen() {
+fun ExtendMembership() {
     val InterFamily = FontFamily(
         Font(R.font.inter, FontWeight.Light),
 
@@ -79,9 +81,6 @@ fun ExtendMembershipScreen() {
     var first by remember {
         mutableStateOf("")
     }
-    var last by remember{
-        mutableStateOf("")
-    }
     var gender by remember{
         mutableStateOf("Gender")
     }
@@ -90,23 +89,6 @@ fun ExtendMembershipScreen() {
     }
     var phone by remember {
         mutableStateOf("")
-    }
-    var dob by remember{
-        mutableStateOf("")
-    }
-    var startDate by remember{
-        mutableStateOf(LocalDate.now())
-    }
-    var endingDate by remember{
-        mutableStateOf(LocalDate.now())
-    }
-
-    val startFormattedDate by remember {
-        derivedStateOf {
-            DateTimeFormatter
-                .ofPattern("dd MMM yyyy")
-                .format(startDate)
-        }
     }
 
     var isExpandedGender by remember {
@@ -119,14 +101,12 @@ fun ExtendMembershipScreen() {
     var actualDuration by remember {
         mutableStateOf(0)
     }
-    endingDate=startDate.plusMonths(actualDuration.toLong())
-    val endFormattedDate by remember {
-        derivedStateOf {
-            DateTimeFormatter
-                .ofPattern("dd MMM yyyy")
-                .format(endingDate)
-        }
-    }
+
+    val db = FirebaseFirestore.getInstance()
+    val userCollection = db.collection("users") // Replace "users" with your collection name
+
+
+
 
     Surface(color = Color(0xFFDAD9D4),
         modifier = androidx.compose.ui.Modifier.fillMaxSize()) {
@@ -326,10 +306,10 @@ fun ExtendMembershipScreen() {
                             modifier = Modifier
                                 .background(Color(0xffffffff)),
                             text = {
-                                Text(text = "1 Month")
+                                Text(text = "1 week")
                             },
                             onClick = {
-                                duration = "1 Month"
+                                duration = "1 week"
                                 isExpandedDuration = false
                                 actualDuration=1
                             }
@@ -338,10 +318,22 @@ fun ExtendMembershipScreen() {
                             modifier = Modifier
                                 .background(Color(0xffffffff)),
                             text = {
-                                Text(text = "3 Months")
+                                Text(text = "2 weeks")
                             },
                             onClick = {
-                                duration = "3 Months"
+                                duration = "2 weeks"
+                                isExpandedDuration = false
+                                actualDuration=2
+                            }
+                        )
+                        DropdownMenuItem(
+                            modifier = Modifier
+                                .background(Color(0xffffffff)),
+                            text = {
+                                Text(text = "3 weeks")
+                            },
+                            onClick = {
+                                duration = "3 weeks"
                                 isExpandedDuration = false
                                 actualDuration=3
                             }
@@ -350,24 +342,12 @@ fun ExtendMembershipScreen() {
                             modifier = Modifier
                                 .background(Color(0xffffffff)),
                             text = {
-                                Text(text = "6 Months")
+                                Text(text = "4 weeks")
                             },
                             onClick = {
-                                duration = "6 Months"
+                                duration = "4 weeks"
                                 isExpandedDuration = false
-                                actualDuration=6
-                            }
-                        )
-                        DropdownMenuItem(
-                            modifier = Modifier
-                                .background(Color(0xffffffff)),
-                            text = {
-                                Text(text = "12 Months")
-                            },
-                            onClick = {
-                                duration = "12 Months"
-                                isExpandedDuration = false
-                                actualDuration=12
+                                actualDuration=4
                             }
                         )
                     }
@@ -414,7 +394,33 @@ fun ExtendMembershipScreen() {
                 .padding(start = 10.dp, end = 10.dp)
                 .height(60.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xff000000)),
-                onClick = { }) {
+                onClick = { val query = userCollection.whereEqualTo("phone", phone)
+                    query.get().addOnSuccessListener { documents ->
+                        if (documents.isEmpty) {
+                            // Handle case where no user found
+                            return@addOnSuccessListener
+                        }
+
+                        val user = documents.documents[0].toObject<Item>() // Replace with your data class
+
+                        // Access user data here (e.g., name, email, etc.)
+                        val endingDate= user?.endingDate
+                        val formattedEndDate = LocalDate.parse(endingDate, DateTimeFormatter.ISO_LOCAL_DATE)
+                        val newDate=formattedEndDate.plusWeeks(actualDuration.toLong())
+                        val newDateString=newDate.toString()
+                        user?.endingDate = newDateString
+
+                        val documentReference = documents.documents[0].reference
+                        documentReference.set(user!!)
+                            .addOnSuccessListener {
+                                Toast.makeText(context, "Duration updated", Toast.LENGTH_SHORT).show()
+                            }
+                            .addOnFailureListener { exception ->
+                                // Handle update failure (e.g., show error message)
+                                Log.w("Firebase", "Error updating item duration", exception)
+                            }
+                        // ...
+                    }}) {
                 Text(text = "Join In",
                     fontFamily = PoppinsFamily,
                     fontSize = 24.sp,

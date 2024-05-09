@@ -48,6 +48,7 @@ import com.example.gymadmin.R
 import com.google.firebase.firestore.FirebaseFirestore
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import com.maxkeppeker.sheets.core.models.base.rememberSheetState
@@ -73,7 +74,9 @@ fun NewMemberScreen() {
     val context= LocalContext.current
 
     val startCalendarState= rememberSheetState()
-    val endCalendarState= rememberSheetState()
+    val dobCalendarState= rememberSheetState()
+
+
 
 
     var first by remember {
@@ -92,7 +95,7 @@ fun NewMemberScreen() {
         mutableStateOf("")
     }
     var dob by remember{
-        mutableStateOf("")
+        mutableStateOf(LocalDate.now())
     }
     var startDate by remember{
         mutableStateOf(LocalDate.now())
@@ -102,6 +105,14 @@ fun NewMemberScreen() {
     }
 
     val startFormattedDate by remember {
+        derivedStateOf {
+            DateTimeFormatter
+                .ofPattern("dd MMM yyyy")
+                .format(startDate)
+        }
+    }
+
+    val dobFormattedDate by remember {
         derivedStateOf {
             DateTimeFormatter
                 .ofPattern("dd MMM yyyy")
@@ -130,144 +141,248 @@ fun NewMemberScreen() {
 
 Surface(color = Color(0xFFDAD9D4),
     modifier = androidx.compose.ui.Modifier.fillMaxSize()) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(2.dp)
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.logo), contentDescription = "logo",
-            Modifier
-                .fillMaxWidth(0.4f)
-                .padding(start = 10.dp)
-                .height(60.dp)
-        )
 
-        Divider(
-            color = Color(0xFFC6C6C6), thickness = 2.dp,
-            modifier = Modifier.padding(start = 10.dp, end = 10.dp)
-        )
 
-        Spacer(modifier = Modifier.height(10.dp))
 
-        Text(
-            text = "New here? Join in!",
-            modifier = Modifier.padding(start = 10.dp),
-            style = TextStyle(
-                fontSize = 30.sp,
-                fontWeight = FontWeight.SemiBold,
-                fontFamily = PoppinsFamily
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(2.dp)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.logo), contentDescription = "logo",
+                Modifier
+                    .fillMaxWidth(0.4f)
+                    .padding(start = 10.dp)
+                    .height(60.dp)
             )
-        )
 
-       Spacer(modifier = Modifier.height(20.dp))
+            Divider(
+                color = Color(0xFFC6C6C6), thickness = 2.dp,
+                modifier = Modifier.padding(start = 10.dp, end = 10.dp)
+            )
 
-        OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 10.dp, end = 10.dp),
-            value = first,
-            onValueChange = {
-                first = it
-            },
-            placeholder = { Text(text = "First Name", fontFamily = PoppinsFamily) },
-            shape = RoundedCornerShape(10.dp),
-            leadingIcon = {Image(painter = painterResource(id = R.drawable.textfeildone), contentDescription ="logo" ,Modifier.width(20.dp))},
-            colors = OutlinedTextFieldDefaults
-                .colors(
-                    focusedContainerColor = Color(0xffffffff),
-                    unfocusedContainerColor = Color(0xffffffff),
-                    unfocusedBorderColor = Color(0x00ffffff),
-                    focusedBorderColor = Color(0x00ffffff),
-                    focusedPlaceholderColor = Color(0xff636363),
-                    focusedTextColor = Color(0xff000000),
-                    unfocusedTextColor = Color(0xff000000),
-                    unfocusedPlaceholderColor = Color(0xff636363),
-                    focusedLeadingIconColor = Color(0xff636363),
-                    unfocusedLeadingIconColor = Color(0xff636363),
-            ),
-        )
+            Spacer(modifier = Modifier.height(10.dp))
 
-        Spacer(modifier = Modifier.height(20.dp))
+            Text(
+                text = "New here? Join in!",
+                modifier = Modifier.padding(start = 10.dp),
+                style = TextStyle(
+                    fontSize = 30.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    fontFamily = PoppinsFamily
+                )
+            )
 
-        OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 10.dp, end = 10.dp),
-            value = last,
-            onValueChange = {
-                last = it
-            },
-            placeholder = { Text(text = "Last Name", fontFamily = PoppinsFamily) },
-            shape = RoundedCornerShape(10.dp),
-            leadingIcon = {Image(painter = painterResource(id = R.drawable.textfeildone), contentDescription ="logo" ,Modifier.width(20.dp))},
-            colors = OutlinedTextFieldDefaults
-                .colors(
-                    focusedContainerColor = Color(0xffffffff),
-                    unfocusedContainerColor = Color(0xffffffff),
-                    unfocusedBorderColor = Color(0x00ffffff),
-                    focusedBorderColor = Color(0x00ffffff),
-                    focusedPlaceholderColor = Color(0xff636363),
-                    focusedTextColor = Color(0xff000000),
-                    unfocusedTextColor = Color(0xff000000),
-                    unfocusedPlaceholderColor = Color(0xff636363),
-                    focusedLeadingIconColor = Color(0xff636363),
-                    unfocusedLeadingIconColor = Color(0xff636363),
-                ),
-        )
+            Spacer(modifier = Modifier.height(20.dp))
 
-        Spacer(modifier = Modifier.height(20.dp))
-
-
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp))
-        {
-            ExposedDropdownMenuBox(expanded = isExpandedGender,
+            OutlinedTextField(
                 modifier = Modifier
-                    .weight(0.5f), onExpandedChange = {
-                isExpandedGender = it
-            }
+                    .fillMaxWidth()
+                    .padding(start = 10.dp, end = 10.dp),
+                value = first,
+                onValueChange = {
+                    first = it
+                },
+                placeholder = { Text(text = "First Name", fontFamily = PoppinsFamily) },
+                shape = RoundedCornerShape(10.dp),
+                leadingIcon = {
+                    Image(
+                        painter = painterResource(id = R.drawable.textfeildone),
+                        contentDescription = "logo",
+                        Modifier.width(20.dp)
+                    )
+                },
+                colors = OutlinedTextFieldDefaults
+                    .colors(
+                        focusedContainerColor = Color(0xffffffff),
+                        unfocusedContainerColor = Color(0xffffffff),
+                        unfocusedBorderColor = Color(0x00ffffff),
+                        focusedBorderColor = Color(0x00ffffff),
+                        focusedPlaceholderColor = Color(0xff636363),
+                        focusedTextColor = Color(0xff000000),
+                        unfocusedTextColor = Color(0xff000000),
+                        unfocusedPlaceholderColor = Color(0xff636363),
+                        focusedLeadingIconColor = Color(0xff636363),
+                        unfocusedLeadingIconColor = Color(0xff636363),
+                    ),
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 10.dp, end = 10.dp),
+                value = last,
+                onValueChange = {
+                    last = it
+                },
+                placeholder = { Text(text = "Last Name", fontFamily = PoppinsFamily) },
+                shape = RoundedCornerShape(10.dp),
+                leadingIcon = {
+                    Image(
+                        painter = painterResource(id = R.drawable.textfeildone),
+                        contentDescription = "logo",
+                        Modifier.width(20.dp)
+                    )
+                },
+                colors = OutlinedTextFieldDefaults
+                    .colors(
+                        focusedContainerColor = Color(0xffffffff),
+                        unfocusedContainerColor = Color(0xffffffff),
+                        unfocusedBorderColor = Color(0x00ffffff),
+                        focusedBorderColor = Color(0x00ffffff),
+                        focusedPlaceholderColor = Color(0xff636363),
+                        focusedTextColor = Color(0xff000000),
+                        unfocusedTextColor = Color(0xff000000),
+                        unfocusedPlaceholderColor = Color(0xff636363),
+                        focusedLeadingIconColor = Color(0xff636363),
+                        unfocusedLeadingIconColor = Color(0xff636363),
+                    ),
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
             )
             {
-                OutlinedTextField(
-                    value = gender,
-                    onValueChange = {},
-                    readOnly = true,
-                    textStyle = TextStyle(color = Color(0xff636363), fontSize = 16.sp, fontFamily = PoppinsFamily),
-                    shape = RoundedCornerShape(10.dp),
-                    trailingIcon = {
-                        Image(
-                            painter = painterResource(id = R.drawable.dropdown),
-                            contentDescription = "dropdown",
-                            modifier = Modifier
-                                .height(20.dp)
-                        )
-                    },
-                    colors = OutlinedTextFieldDefaults
-                        .colors(
-                            focusedContainerColor = Color(0xffffffff),
-                            unfocusedContainerColor = Color(0xffffffff),
-                            unfocusedBorderColor = Color(0x00ffffff),
-                            focusedBorderColor = Color(0x00ffffff),
-                            focusedPlaceholderColor = Color(0xff636363),
-                            focusedTextColor = Color(0xff000000),
-                            unfocusedTextColor = Color(0xff000000),
-                            unfocusedPlaceholderColor = Color(0xff636363),
-                            focusedLeadingIconColor = Color(0xff636363),
-                            unfocusedLeadingIconColor = Color(0xff636363),
+                ExposedDropdownMenuBox(expanded = isExpandedGender,
+                    modifier = Modifier
+                        .weight(0.5f), onExpandedChange = {
+                        isExpandedGender = it
+                    }
+                )
+                {
+                    OutlinedTextField(
+                        value = gender,
+                        onValueChange = {},
+                        readOnly = true,
+                        textStyle = TextStyle(
+                            color = Color(0xff636363),
+                            fontSize = 16.sp,
+                            fontFamily = PoppinsFamily
                         ),
-                    modifier = Modifier.menuAnchor()
+                        shape = RoundedCornerShape(10.dp),
+                        trailingIcon = {
+                            Image(
+                                painter = painterResource(id = R.drawable.dropdown),
+                                contentDescription = "dropdown",
+                                modifier = Modifier
+                                    .height(20.dp)
+                            )
+                        },
+                        colors = OutlinedTextFieldDefaults
+                            .colors(
+                                focusedContainerColor = Color(0xffffffff),
+                                unfocusedContainerColor = Color(0xffffffff),
+                                unfocusedBorderColor = Color(0x00ffffff),
+                                focusedBorderColor = Color(0x00ffffff),
+                                focusedPlaceholderColor = Color(0xff636363),
+                                focusedTextColor = Color(0xff000000),
+                                unfocusedTextColor = Color(0xff000000),
+                                unfocusedPlaceholderColor = Color(0xff636363),
+                                focusedLeadingIconColor = Color(0xff636363),
+                                unfocusedLeadingIconColor = Color(0xff636363),
+                            ),
+                        modifier = Modifier.menuAnchor()
+                    )
+
+
+                    Box(modifier = Modifier.fillMaxWidth(0.3f)) {
+                        ExposedDropdownMenu(expanded = isExpandedGender,
+                            modifier = Modifier
+                                .background(Color(0xffffffff))
+                                .fillMaxWidth(0.3f),
+                            onDismissRequest = {
+                                isExpandedGender = false
+                            }
+                        )
+                        {
+                            DropdownMenuItem(
+                                modifier = Modifier
+                                    .background(Color(0xffffffff)),
+                                text = {
+                                    Text(text = "Male")
+                                },
+                                onClick = {
+                                    gender = "Male"
+                                    isExpandedGender = false
+                                }
+                            )
+                            DropdownMenuItem(
+                                text = {
+                                    Text(text = "Female")
+                                },
+                                onClick = {
+                                    gender = "Female"
+                                    isExpandedGender = false
+                                }
+                            )
+                        }
+                    }
+
+                }
+
+
+                Spacer(
+                    modifier = Modifier
+                        .weight(.1f)
                 )
 
 
-                Box(modifier = Modifier.fillMaxWidth(0.3f)) {
-                    ExposedDropdownMenu(expanded = isExpandedGender,
+
+                ExposedDropdownMenuBox(
+                    expanded = isExpandedDuration,
+                    modifier = Modifier.weight(0.5f), onExpandedChange = {
+                        isExpandedDuration = it
+                    }
+                )
+                {
+                    OutlinedTextField(
+                        value = duration,
+                        onValueChange = {},
+                        readOnly = true,
+                        textStyle = TextStyle(
+                            color = Color(0xff636363),
+                            fontSize = 16.sp,
+                            fontFamily = PoppinsFamily
+                        ),
+                        shape = RoundedCornerShape(10.dp),
+                        trailingIcon = {
+                            Image(
+                                painter = painterResource(id = R.drawable.dropdown),
+                                contentDescription = "dropdown",
+                                modifier = Modifier
+                                    .height(20.dp)
+                            )
+                        },
+                        colors = OutlinedTextFieldDefaults
+                            .colors(
+                                focusedContainerColor = Color(0xffffffff),
+                                unfocusedContainerColor = Color(0xffffffff),
+                                unfocusedBorderColor = Color(0x00ffffff),
+                                focusedBorderColor = Color(0x00ffffff),
+                                focusedPlaceholderColor = Color(0xff636363),
+                                focusedTextColor = Color(0xff000000),
+                                unfocusedTextColor = Color(0xff000000),
+                                unfocusedPlaceholderColor = Color(0xff636363),
+                                focusedLeadingIconColor = Color(0xff636363),
+                                unfocusedLeadingIconColor = Color(0xff636363),
+                            ),
+                        modifier = Modifier.menuAnchor()
+                    )
+
+                    ExposedDropdownMenu(expanded = isExpandedDuration,
                         modifier = Modifier
                             .background(Color(0xffffffff))
                             .fillMaxWidth(0.3f),
                         onDismissRequest = {
-                            isExpandedGender = false
+                            isExpandedDuration = false
                         }
                     )
                     {
@@ -275,231 +390,157 @@ Surface(color = Color(0xFFDAD9D4),
                             modifier = Modifier
                                 .background(Color(0xffffffff)),
                             text = {
-                                Text(text = "Male")
+                                Text(text = "1 Month")
                             },
                             onClick = {
-                                gender = "Male"
-                                isExpandedGender = false
+                                duration = "1 Month"
+                                isExpandedDuration = false
+                                actualDuration = 1
                             }
                         )
                         DropdownMenuItem(
+                            modifier = Modifier
+                                .background(Color(0xffffffff)),
                             text = {
-                                Text(text = "Female")
+                                Text(text = "3 Months")
                             },
                             onClick = {
-                                gender = "Female"
-                                isExpandedGender = false
+                                duration = "3 Months"
+                                isExpandedDuration = false
+                                actualDuration = 3
+                            }
+                        )
+                        DropdownMenuItem(
+                            modifier = Modifier
+                                .background(Color(0xffffffff)),
+                            text = {
+                                Text(text = "6 Months")
+                            },
+                            onClick = {
+                                duration = "6 Months"
+                                isExpandedDuration = false
+                                actualDuration = 6
+                            }
+                        )
+                        DropdownMenuItem(
+                            modifier = Modifier
+                                .background(Color(0xffffffff)),
+                            text = {
+                                Text(text = "12 Months")
+                            },
+                            onClick = {
+                                duration = "12 Months"
+                                isExpandedDuration = false
+                                actualDuration = 12
                             }
                         )
                     }
                 }
 
+
             }
 
 
-                Spacer(modifier = Modifier
-                    .weight(.1f))
 
+            Spacer(modifier = Modifier.height(20.dp))
 
-
-            ExposedDropdownMenuBox(
-                expanded = isExpandedDuration,
-                modifier=Modifier.weight(0.5f), onExpandedChange = {
-                    isExpandedDuration = it
-                }
+            OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 10.dp, end = 10.dp),
+                value = phone,
+                onValueChange = {
+                    phone = it
+                },
+                placeholder = { Text(text = "Phone Number", fontFamily = PoppinsFamily) },
+                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Phone),
+                shape = RoundedCornerShape(10.dp),
+                leadingIcon = {
+                    Image(
+                        painter = painterResource(id = R.drawable.textfeildone),
+                        contentDescription = "logo",
+                        Modifier.width(20.dp)
+                    )
+                },
+                colors = OutlinedTextFieldDefaults
+                    .colors(
+                        focusedContainerColor = Color(0xffffffff),
+                        unfocusedContainerColor = Color(0xffffffff),
+                        unfocusedBorderColor = Color(0x00ffffff),
+                        focusedBorderColor = Color(0x00ffffff),
+                        focusedPlaceholderColor = Color(0xff636363),
+                        focusedTextColor = Color(0xff000000),
+                        unfocusedTextColor = Color(0xff000000),
+                        unfocusedPlaceholderColor = Color(0xff636363),
+                        focusedLeadingIconColor = Color(0xff636363),
+                        unfocusedLeadingIconColor = Color(0xff636363),
+                    ),
             )
-            {
-                OutlinedTextField(
-                    value = duration,
-                    onValueChange = {},
-                    readOnly = true,
-                    textStyle = TextStyle(color = Color(0xff636363),fontSize = 16.sp, fontFamily=PoppinsFamily),
-                    shape = RoundedCornerShape(10.dp),
-                    trailingIcon = {
-                        Image(
-                            painter = painterResource(id = R.drawable.dropdown),
-                            contentDescription = "dropdown",
-                            modifier = Modifier
-                                .height(20.dp)
-                        )
-                    },
-                    colors = OutlinedTextFieldDefaults
-                        .colors(
-                            focusedContainerColor = Color(0xffffffff),
-                            unfocusedContainerColor = Color(0xffffffff),
-                            unfocusedBorderColor = Color(0x00ffffff),
-                            focusedBorderColor = Color(0x00ffffff),
-                            focusedPlaceholderColor = Color(0xff636363),
-                            focusedTextColor = Color(0xff000000),
-                            unfocusedTextColor = Color(0xff000000),
-                            unfocusedPlaceholderColor = Color(0xff636363),
-                            focusedLeadingIconColor = Color(0xff636363),
-                            unfocusedLeadingIconColor = Color(0xff636363),
-                        ),
-                    modifier = Modifier.menuAnchor()
-                )
 
-                ExposedDropdownMenu(expanded = isExpandedDuration,
-                    modifier = Modifier
-                        .background(Color(0xffffffff))
-                        .fillMaxWidth(0.3f),
-                    onDismissRequest = {
-                        isExpandedDuration = false
-                    }
+            Spacer(modifier = Modifier.height(20.dp))
+
+            CalendarDialog(state = dobCalendarState,
+                config = CalendarConfig(
+                    monthSelection = true,
+                    yearSelection = true
+                ),
+                selection = CalendarSelection.Date { date ->
+                    dob = date
+                })
+
+            Button(modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+                .padding(start = 10.dp, end = 10.dp),
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults
+                    .buttonColors(Color.White),
+                onClick = { startCalendarState.show() }) {
+                Image(
+                    modifier = Modifier.padding(end = 10.dp),
+                    painter = painterResource(id = R.drawable.calendaricon),
+                    contentDescription = "calendar icon"
                 )
-                {
-                    DropdownMenuItem(
-                        modifier = Modifier
-                            .background(Color(0xffffffff)),
-                        text = {
-                            Text(text = "1 Month")
-                        },
-                        onClick = {
-                            duration = "1 Month"
-                            isExpandedDuration = false
-                            actualDuration=1
-                        }
-                    )
-                    DropdownMenuItem(
-                        modifier = Modifier
-                            .background(Color(0xffffffff)),
-                        text = {
-                            Text(text = "3 Months")
-                        },
-                        onClick = {
-                            duration = "3 Months"
-                            isExpandedDuration = false
-                            actualDuration=3
-                        }
-                    )
-                    DropdownMenuItem(
-                        modifier = Modifier
-                            .background(Color(0xffffffff)),
-                        text = {
-                            Text(text = "6 Months")
-                        },
-                        onClick = {
-                            duration = "6 Months"
-                            isExpandedDuration = false
-                            actualDuration=6
-                        }
-                    )
-                    DropdownMenuItem(
-                        modifier = Modifier
-                            .background(Color(0xffffffff)),
-                        text = {
-                            Text(text = "12 Months")
-                        },
-                        onClick = {
-                            duration = "12 Months"
-                            isExpandedDuration = false
-                            actualDuration=12
-                        }
-                    )
-                }
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Start,
+                    text = "Date of Birth: ${dobFormattedDate}",
+                    fontSize = 16.sp,
+                    fontFamily = PoppinsFamily,
+                    color = Color(0XFF636363)
+                )
             }
 
+            Spacer(modifier = Modifier.height(20.dp))
 
+
+            CalendarDialog(state = startCalendarState,
+                config = CalendarConfig(
+                    monthSelection = true,
+                    yearSelection = true
+                ),
+                selection = CalendarSelection.Date { date ->
+                    startDate = date
+                })
+
+            Button(modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+                .padding(start = 10.dp, end = 10.dp),
+
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults
+                    .buttonColors(Color.White),
+                onClick = { startCalendarState.show() }) {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Start,
+                    text = "Start Date: ${startFormattedDate}",
+                    fontSize = 16.sp,
+                    fontFamily = PoppinsFamily,
+                    color = Color(0XFF636363)
+                )
             }
-
-
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 10.dp, end = 10.dp),
-            value = phone,
-            onValueChange = {
-                phone = it
-            },
-            placeholder = { Text(text = "Phone Number",fontFamily=PoppinsFamily) },
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Phone),
-            shape = RoundedCornerShape(10.dp),
-            leadingIcon = {Image(painter = painterResource(id = R.drawable.textfeildone), contentDescription ="logo" ,Modifier.width(20.dp))},
-            colors = OutlinedTextFieldDefaults
-                .colors(
-                    focusedContainerColor = Color(0xffffffff),
-                    unfocusedContainerColor = Color(0xffffffff),
-                    unfocusedBorderColor = Color(0x00ffffff),
-                    focusedBorderColor = Color(0x00ffffff),
-                    focusedPlaceholderColor = Color(0xff636363),
-                    focusedTextColor = Color(0xff000000),
-                    unfocusedTextColor = Color(0xff000000),
-                    unfocusedPlaceholderColor = Color(0xff636363),
-                    focusedLeadingIconColor = Color(0xff636363),
-                    unfocusedLeadingIconColor = Color(0xff636363),
-                ),
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 10.dp, end = 10.dp),
-            value = dob,
-            onValueChange = {
-                dob = it
-            },
-            placeholder = { Text(text = "DoB",fontFamily=PoppinsFamily) },
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Phone),
-            shape = RoundedCornerShape(10.dp),
-            leadingIcon = {Image(painter = painterResource(id = R.drawable.calendaricon), contentDescription ="logo" ,Modifier.width(20.dp))},
-            colors = OutlinedTextFieldDefaults
-                .colors(
-                    focusedContainerColor = Color(0xffffffff),
-                    unfocusedContainerColor = Color(0xffffffff),
-                    unfocusedBorderColor = Color(0x00ffffff),
-                    focusedBorderColor = Color(0x00ffffff),
-                    focusedPlaceholderColor = Color(0xff636363),
-                    focusedTextColor = Color(0xff000000),
-                    unfocusedTextColor = Color(0xff000000),
-                    unfocusedPlaceholderColor = Color(0xff636363),
-                    focusedLeadingIconColor = Color(0xff636363),
-                    unfocusedLeadingIconColor = Color(0xff636363),
-                ),
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-
-        CalendarDialog(state = startCalendarState,
-            config= CalendarConfig(
-                monthSelection = true,
-                yearSelection = true
-            ),
-            selection =CalendarSelection.Date{
-                date->
-            startDate=date
-        } )
-
-        Button(modifier= Modifier
-            .fillMaxWidth()
-            .height(50.dp)
-            .padding(start = 10.dp, end = 10.dp),
-            shape = RoundedCornerShape(10.dp),
-            colors=ButtonDefaults
-                .buttonColors(Color.White),
-            onClick = { startCalendarState.show() } ){
-            Text(
-                text = "Start Date: ${startFormattedDate}",
-                fontSize = 16.sp,
-                fontFamily = PoppinsFamily,
-                color = Color(0XFF636363)
-            )
-        }
-
-        CalendarDialog(state = endCalendarState,
-            config= CalendarConfig(
-                monthSelection = true,
-                yearSelection = true
-            ),
-            selection =CalendarSelection.Date{
-                    date->
-                endingDate=date
-            } )
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -509,33 +550,44 @@ Surface(color = Color(0xFFDAD9D4),
                 color = Color.Black,
                 fontFamily = PoppinsFamily,
                 textAlign = TextAlign.Center,
-                modifier=Modifier
+                modifier = Modifier
                     .fillMaxWidth()
             )
 
-        Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
 
-
-        var item=Item(first,last,gender,actualDuration.toLong(),phone,dob, startDate.toString(), endingDate.toString())
-
-        Button(modifier= Modifier
-            .fillMaxWidth()
-            .padding(start = 10.dp, end = 10.dp)
-            .height(60.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xff000000)),
-            onClick = { onAddCustomerClick(item,context) }) {
-            Text(text = "Join In",
-                fontFamily = PoppinsFamily,
-                fontSize = 24.sp,
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.ExtraBold
+            var item = Item(
+                first,
+                last,
+                gender,
+                actualDuration.toLong(),
+                phone,
+                dob.toString(),
+                startDate.toString(),
+                endingDate.toString()
             )
+
+            Button(modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 10.dp, end = 10.dp)
+                .height(60.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xff000000)),
+                enabled = (first.length >= 2 && last.length >= 2 && gender.length >= 2 && duration.length > 0 && phone.length == 10 && dob.toString().length > 0 && startDate.toString().length >= 4),
+                onClick = {
+                    onAddCustomerClick(item, context)
+                }) {
+                Text(
+                    text = "Join In",
+                    fontFamily = PoppinsFamily,
+                    fontSize = 24.sp,
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.ExtraBold
+                )
+            }
+
+
         }
-
-
-
-    }
 }
 }
 
