@@ -34,12 +34,10 @@ fun ColumnItems(list:List<Item>) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.Red)
             .padding(10.dp),
     ) {
         list.forEach { item ->
-            Text(text = "${item.firstName}")
-            Log.d(TAG,"${item.firstName}")
+            RowItems(item=item)
         }
     }
 }
@@ -53,7 +51,7 @@ fun RowItems(item:Item){
             .height(70.dp)
             .padding(10.dp)
     ) {
-        if(item.gender=="male") {
+        if(item.gender=="Male") {
             Image(
                 painter = painterResource(id = R.drawable.gender_male), contentDescription = "Male",
                 modifier = Modifier
@@ -62,7 +60,7 @@ fun RowItems(item:Item){
                     .padding(10.dp)
             )
         }
-        else if(item.gender=="female")
+        else if(item.gender=="Female")
         {
             Image(
                 painter = painterResource(id = R.drawable.gender_female), contentDescription = "Male",
@@ -97,13 +95,13 @@ fun RowItems(item:Item){
             var duration=item.duration
             Text(text = "$duration Months",style= TextStyle(
                 fontSize=12.sp,
-            )
+                )
             )
             Spacer(modifier = Modifier.height(3.dp))
 
             Text(text = item.startingDate.toString(),style= TextStyle(
                 fontSize=12.sp,
-            )
+                )
             )
         }
 

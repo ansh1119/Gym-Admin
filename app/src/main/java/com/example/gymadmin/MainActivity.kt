@@ -7,11 +7,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import com.example.gymadmin.Data.Item
+import com.example.gymadmin.Data.MyViewModel
 import com.example.gymadmin.Screens.AllMembersScreen
-import com.example.gymadmin.Screens.HomeScreen
-import com.example.gymadmin.Screens.NewMemberScreen
+import com.example.gymadmin.Screens.DueMemberScreen
 import com.google.firebase.FirebaseApp
-import java.time.Instant.now
 import java.time.LocalDate
 
 
@@ -26,7 +25,8 @@ class MainActivity : ComponentActivity() {
         FirebaseApp.initializeApp(this)
         setContent {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                AllMembersScreen()
+                val viewModel = MyViewModel()
+                AllMembersScreen(viewModel = viewModel)
             }
         }
     }

@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.gymadmin.Components.ColumnItems
 import com.example.gymadmin.Data.Item
+import com.example.gymadmin.Data.MyViewModel
 import com.example.gymadmin.MainActivity
 import com.example.gymadmin.R
 import com.google.firebase.firestore.FirebaseFirestore
@@ -40,7 +41,7 @@ import java.time.format.DateTimeFormatter
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun AllMembersScreen(){
+fun AllMembersScreen(viewModel: MyViewModel) {
     val PoppinsFamily = FontFamily(
         Font(R.font.poppins, FontWeight.Light),
 
@@ -57,58 +58,59 @@ fun AllMembersScreen(){
     usersCollection.get().addOnSuccessListener { documents ->
         Log.d(TAG, "documents accessed")
         for (document in documents.documents) {
-            Log.d(TAG,"documents k andar")
+            Log.d(TAG, "documents k andar")
             // Convert document to your data class object (see step 6)
-            val user = document.toObject(Item::class.java)!! // Replace User with your data class name
+            val user =
+                document.toObject(Item::class.java)!! // Replace User with your data class name
             // Use the user object and its member variables
-            val joinDate=user.endingDate
+            val joinDate = user.endingDate
             val formattedJoinDate = LocalDate.parse(joinDate, DateTimeFormatter.ISO_LOCAL_DATE)
 
-            if(today.isBefore(formattedJoinDate)){
+            if (today.isBefore(formattedJoinDate)) {
                 list.add(user)
             }
         }
     }.addOnFailureListener { exception ->
-        Toast.makeText(context,"no users",Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "no users", Toast.LENGTH_SHORT).show()
     }
 
+    val members = viewModel.itemList.value
 
 
-    Surface(color = Color(0xFFDAD9D4),
-        modifier = Modifier.
-        fillMaxSize()){
-        Column(modifier = Modifier.
-        padding(2.dp)) {
-            Image(painter = painterResource(id = R.drawable.logo) , contentDescription = "logo",
+    Surface(
+        color = Color(0xFFDAD9D4),
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Column(
+            modifier = Modifier.padding(2.dp)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.logo), contentDescription = "logo",
                 Modifier
                     .fillMaxWidth(0.4f)
                     .padding(start = 10.dp)
                     .height(60.dp)
             )
 
-            Divider(color=Color(0xFFC6C6C6), thickness = 2.dp,
-                modifier=Modifier.padding(start=10.dp, end = 10.dp))
+            Divider(
+                color = Color(0xFFC6C6C6), thickness = 2.dp,
+                modifier = Modifier.padding(start = 10.dp, end = 10.dp)
+            )
 
             Spacer(Modifier.height(10.dp))
 
-            Text(text ="All Members",
-                modifier=Modifier.padding(start=10.dp),
+            Text(
+                text = "All Members",
+                modifier = Modifier.padding(start = 10.dp),
                 style = TextStyle(
                     fontSize = 30.sp,
                     fontWeight = FontWeight.SemiBold,
                     fontFamily = PoppinsFamily
                 )
             )
-            LazyColumn(
-                modifier=Modifier.fillMaxSize()
-                    .padding(10.dp),
-                contentPadding= PaddingValues(10.dp),
-            ){
-
-
-                itemsIndexed(MainActivity.items){ _, item ->
-                    ColumnItems(item)
-                    Spacer(modifier = Modifier.height(10.dp))
+            LazyColumn {
+                items(1) { index ->
+                    ColumnItems(list=members)
                 }
             }
         }

@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -23,7 +22,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -41,24 +39,23 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.gymadmin.Components.CustomSwitch
+import com.example.gymadmin.Data.MyViewModel
 import com.example.gymadmin.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 //@Preview
 @Composable
-fun  HomeScreen(/*navController: NavController*/) {
+fun  HomeScreen(navController: NavHostController) {
 
     var date:String
     val PoppinsFamily = FontFamily(
     Font(R.font.poppins, FontWeight.Light),
     )
-    
+    val viewModel = MyViewModel()
     Surface(color = Color(0xffDAD9D4),
     modifier=Modifier.fillMaxHeight()) {
         Column {
@@ -124,7 +121,7 @@ fun  HomeScreen(/*navController: NavController*/) {
                     modifier= Modifier
                         .weight(.3f)
                         .clickable {
-                            //navController.navigate(route = "due")
+//                            navController.navigate(route = "due",time="Today",viewModel=viewModel)
                         }) {
                     Spacer(modifier = Modifier.width(10.dp))
                     Spacer(modifier = Modifier.height(10.dp))

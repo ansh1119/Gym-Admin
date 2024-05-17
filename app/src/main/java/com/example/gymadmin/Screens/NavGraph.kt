@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.gymadmin.Data.MyViewModel
 import kotlinx.coroutines.delay
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -34,10 +35,10 @@ fun Nav() {
             }
         }
         composable(route="home"){
-            HomeScreen(/*navController*/)
+            HomeScreen(navController)
         }
         composable(route="due"){
-//            DueMemberScreen(navController = navController, time ="" )
+            DueMemberScreen(navController = navController, time="Error ", viewModel= MyViewModel() )
         }
     }
 }
